@@ -130,12 +130,12 @@
                     }
                     const data = await response.json();
                     console.log(data);
-                    // $.map(data, function (elementOrValue, indexOrKey) {
-                    //     console.log(elementOrValue)
-                    //     // $.map(elementOrValue, function (elementOrValue1, indexOrKey1) {
-                    //     //     console.log(elementOrValue1)
-                    //     // });
-                    // });
+                    $.map(data, function (elementOrValue, indexOrKey) {
+                        console.log(elementOrValue)
+                        $.map(elementOrValue, function (elementOrValue1, indexOrKey1) {
+                            console.log(elementOrValue1)
+                        });
+                    });
                 } catch (error) {
                     console.log('Error: ' + err);
                 }
