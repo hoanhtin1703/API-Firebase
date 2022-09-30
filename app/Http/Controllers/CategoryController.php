@@ -74,10 +74,9 @@ class CategoryController extends Controller
                 ];
              $this->database->getReference('category/'.$id)->update($data);
          }
-
     }
-    public function delete(Request $request){
-        
+    public function delete(Request $request,$id){
+        return response()->json($this->database->getReference('category/'.$id)->remove());
     }
     public function get_id(Request $request , $id){
         return response()->json($this->database->getReference('category/'.$id)->getValue());
