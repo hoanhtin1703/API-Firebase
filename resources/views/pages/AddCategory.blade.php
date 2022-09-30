@@ -5,11 +5,13 @@
 
             <h2>ADD Category</h2>
             <div class="col-lg-6">
-                <form action="" method="post" id="Add-Category">
+                <form action="" method="post" id="Add-Category" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Category_Name</label>
-                        <input type="text" class="form-control category_name">
+                        <input type="text" name="category_name" class="form-control category_name">
+                        <input type="file" name="image" placeholder="Choose image"
+                        id="image">
                         <input type="hidden" id="cate">
                     </div>
 
@@ -53,7 +55,7 @@
 
                         render: function(data, type, full, meta) {
                             return meta.row + 1;
-                            //I want to get row index here somehow
+                          
                         }
                     },
                     {
@@ -82,17 +84,18 @@
                 // console.log("last id"+id)
                 var _token = $('input[name="_token"]').val();
                 e.preventDefault();
-                $("#cate").val($('.category_name').val());
-                var category_name = $('#cate').val();
-
+                // $("#cate").val($('.category_name').val());
+                // var category_name = $('#cate').val();
+                var formData = new FormData($('form#Add-Category')[0]);
                 $.ajax({
                     type: "POST",
                     url: '{{ url('/api/add-category') }}',
-                    data: {
-                        category_name: category_name,
-                        _token: _token,
-                    },
+                    data: formData,
+                    cache: false,
+                     contentType: false,
+                      processData: false,
                     success: function(data) {
+                         
                         $('#myTable').DataTable().clear();
                         $.ajax({
                             method: 'GET',
@@ -103,6 +106,7 @@
                                 table.rows.add(json).draw();
                             }
                         });
+                        console.log(data)
                     }
                 });
             });
@@ -111,12 +115,11 @@
         function update(id) {
             alert("sua" + id)
         }
-
         function xoa(id) {
             alert("xoa" + id)
         }
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             // getData()
             //   Add Category  
@@ -141,5 +144,5 @@
                 }
             }
         });
-    </script>
+    </script> --}}
 @endpush
